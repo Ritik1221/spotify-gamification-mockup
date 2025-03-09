@@ -9,10 +9,27 @@ import { motion } from 'framer-motion';
 import { toast } from "sonner";
 import { BadgePlus, Search } from 'lucide-react';
 
+interface Collaborator {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+interface Playlist {
+  id: string;
+  title: string;
+  coverUrl: string;
+  collaborators: Collaborator[];
+  trackCount: number;
+  privacy: 'private' | 'public' | 'collaborative';
+  rating?: number;
+  isRatingEnabled: boolean;
+}
+
 const PlaylistsPage = () => {
   const [searchText, setSearchText] = useState('');
 
-  const playlists = [
+  const playlists: Playlist[] = [
     {
       id: '1',
       title: 'Weekend Vibes',

@@ -1,173 +1,190 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import BottomNav from '@/components/layout/BottomNav';
-import Leaderboard from '@/components/features/Leaderboard';
+import LeaderboardComponent from '@/components/features/Leaderboard';
 import Badge from '@/components/common/Badge';
 import AnimatedTransition from '@/components/common/AnimatedTransition';
-import { Music, Flame } from 'lucide-react';
+import { Filter, Users, Award, Clock } from 'lucide-react';
+import { toast } from "sonner";
 import { motion } from 'framer-motion';
 
+interface LeaderboardUser {
+  id: string;
+  name: string;
+  avatar: string;
+  points: number;
+  position: number;
+  positionChange?: 'up' | 'down' | 'none';
+  isCurrentUser?: boolean;
+}
+
 const LeaderboardPage = () => {
-  const users = [
+  const [activeFilter, setActiveFilter] = useState('friends');
+
+  const leaderboardData: LeaderboardUser[] = [
     {
-      id: '1',
-      name: 'Tara',
-      avatar: 'https://i.pravatar.cc/150?img=1',
-      points: 140,
+      id: 'u1',
+      name: 'Raj',
+      avatar: 'https://i.pravatar.cc/150?img=11',
+      points: 1250,
       position: 1,
       positionChange: 'up'
     },
     {
-      id: '2',
-      name: 'Aditya',
-      avatar: 'https://i.pravatar.cc/150?img=3',
-      points: 115,
+      id: 'u2',
+      name: 'Anita',
+      avatar: 'https://i.pravatar.cc/150?img=5',
+      points: 1120,
       position: 2,
-      positionChange: 'none',
-      isCurrentUser: true
+      positionChange: 'up'
     },
     {
-      id: '3',
-      name: 'Rishi',
-      avatar: 'https://i.pravatar.cc/150?img=4',
-      points: 110,
+      id: 'u3',
+      name: 'Vikram',
+      avatar: 'https://i.pravatar.cc/150?img=12',
+      points: 980,
       position: 3,
       positionChange: 'down'
     },
     {
-      id: '4',
-      name: 'Sanya',
-      avatar: 'https://i.pravatar.cc/150?img=5',
-      points: 100,
+      id: 'u4',
+      name: 'Meera',
+      avatar: 'https://i.pravatar.cc/150?img=10',
+      points: 875,
       position: 4,
       positionChange: 'none'
     },
     {
-      id: '5',
-      name: 'Arjun',
-      avatar: 'https://i.pravatar.cc/150?img=6',
-      points: 90,
+      id: 'u5',
+      name: 'Priya',
+      avatar: 'https://i.pravatar.cc/150?img=32',
+      points: 820,
       position: 5,
-      positionChange: 'up'
+      positionChange: 'up',
+      isCurrentUser: true
     },
     {
-      id: '6',
-      name: 'Kavya',
-      avatar: 'https://i.pravatar.cc/150?img=7',
-      points: 85,
+      id: 'u6',
+      name: 'Arjun',
+      avatar: 'https://i.pravatar.cc/150?img=15',
+      points: 780,
       position: 6,
       positionChange: 'down'
     },
     {
-      id: '7',
-      name: 'Jay',
-      avatar: 'https://i.pravatar.cc/150?img=8',
-      points: 75,
+      id: 'u7',
+      name: 'Deepak',
+      avatar: 'https://i.pravatar.cc/150?img=22',
+      points: 695,
       position: 7,
-      positionChange: 'up'
+      positionChange: 'none'
     }
   ];
 
-  const activityLog = [
-    { id: '1', user: 'Aditya', action: 'completed a daily challenge', points: '+15', time: '2h ago' },
-    { id: '2', user: 'Tara', action: 'rated 5 songs', points: '+10', time: '3h ago' },
-    { id: '3', user: 'Rishi', action: 'maintained a 7-day streak', points: '+25', time: '5h ago' }
-  ];
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+    toast.info(`Filter changed to ${filter}`);
+  };
+
+  const handleClaimReward = () => {
+    toast.success("Reward claimed successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-spotify-black to-spotify-dark pb-20">
       <Header 
         title="Leaderboard" 
-        subtitle="See where you rank"
-        showSearch={false}
+        showSearch={true}
+        showNotification={true}
         showProfile={true}
       />
       
       <main className="px-4 pt-2 pb-24">
         <AnimatedTransition>
-          {/* User Stats */}
+          {/* Filter Section */}
           <section className="mb-6">
-            <motion.div 
-              className="bg-spotify-light rounded-xl p-4 border border-white/10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold text-lg">Rankings</h2>
+              <div className="flex items-center space-x-2">
+                <button 
+                  className={`flex items-center gap-1 text-xs py-2 px-4 rounded-full border border-white/10 transition-colors ${activeFilter === 'friends' ? 'bg-spotify-green text-black font-medium' : 'hover:bg-white/5 text-spotify-muted'}`}
+                  onClick={() => handleFilterChange('friends')}
+                >
+                  <Users size={14} />
+                  Friends
+                </button>
+                <button 
+                  className={`flex items-center gap-1 text-xs py-2 px-4 rounded-full border border-white/10 transition-colors ${activeFilter === 'global' ? 'bg-spotify-green text-black font-medium' : 'hover:bg-white/5 text-spotify-muted'}`}
+                  onClick={() => handleFilterChange('global')}
+                >
+                  <Award size={14} />
+                  Global
+                </button>
+              </div>
+            </div>
+          </section>
+          
+          {/* Leaderboard */}
+          <LeaderboardComponent 
+            users={leaderboardData}
+            className="mb-8"
+          />
+          
+          {/* Rewards Section */}
+          <section className="mb-8">
+            <div className="bg-spotify-light rounded-xl p-4 border border-white/10">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-base">Your Stats</h3>
-                <Badge text="Top 10%" variant="success" size="sm" />
+                <h3 className="font-medium text-sm">Weekly Rewards</h3>
+                <Badge text="Ends in 2d" variant="streak" size="sm" icon={<Clock size={12} />} />
               </div>
               
-              <div className="grid grid-cols-3 gap-2">
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="flex items-center justify-center w-8 h-8 mx-auto rounded-full bg-spotify-green/20 text-spotify-green mb-1">
-                    <span className="text-sm font-bold">2</span>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-spotify-dark/50 rounded-lg p-3 text-center">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500/20 text-yellow-400 mx-auto mb-2">
+                    <Award size={16} />
                   </div>
-                  <span className="text-xs text-spotify-muted">Rank</span>
+                  <h4 className="text-xs font-medium">Top 10</h4>
+                  <p className="text-xs text-spotify-muted mt-1">Exclusive Badge</p>
                 </div>
                 
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="flex items-center justify-center w-8 h-8 mx-auto rounded-full bg-blue-500/20 text-blue-400 mb-1">
-                    <span className="text-sm font-bold">115</span>
+                <div className="bg-spotify-dark/50 rounded-lg p-3 text-center">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 text-green-400 mx-auto mb-2">
+                    <Users size={16} />
                   </div>
-                  <span className="text-xs text-spotify-muted">Points</span>
-                </div>
-                
-                <div className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="flex items-center justify-center w-8 h-8 mx-auto rounded-full bg-yellow-500/20 text-yellow-400 mb-1">
-                    <Flame size={16} />
-                  </div>
-                  <span className="text-xs text-spotify-muted">5 Day Streak</span>
+                  <h4 className="text-xs font-medium">Top 50</h4>
+                  <p className="text-xs text-spotify-muted mt-1">Community Shoutout</p>
                 </div>
               </div>
-            </motion.div>
+              
+              <button 
+                className="w-full mt-4 py-2 px-4 rounded-full bg-spotify-green text-black text-sm font-medium hover:bg-opacity-90 transition-colors"
+                onClick={handleClaimReward}
+              >
+                Claim Reward
+              </button>
+            </div>
           </section>
           
-          {/* Main Leaderboard */}
-          <section className="mb-6">
-            <Leaderboard 
-              users={users}
-              title="Weekly Challenge"
-            />
-          </section>
-          
-          {/* Recent Activity */}
-          <section>
-            <div className="mb-3">
-              <h2 className="font-bold text-lg">Recent Activity</h2>
+          {/* Promotional Content */}
+          <motion.div 
+            className="relative overflow-hidden rounded-xl bg-gradient-to-tr from-purple-500/30 to-purple-700/30 p-4 border border-white/10"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="relative z-10">
+              <h2 className="font-bold text-lg">New Challenges Await</h2>
+              <p className="text-sm text-spotify-muted mt-1">Compete in new challenges to climb the leaderboard</p>
+              <button className="mt-4 bg-spotify-green text-black py-2 px-4 rounded-full text-sm font-medium hover:bg-opacity-90 transition-colors">
+                Explore Challenges
+              </button>
             </div>
             
             <motion.div 
-              className="bg-spotify-light rounded-xl overflow-hidden border border-white/10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-            >
-              {activityLog.map((activity, index) => (
-                <motion.div 
-                  key={activity.id}
-                  className={`p-3 ${index < activityLog.length - 1 ? 'border-b border-white/5' : ''}`}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 + index * 0.1, duration: 0.3 }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="font-medium">{activity.user}</span>
-                      <span className="text-spotify-muted"> {activity.action}</span>
-                    </div>
-                    <div className="text-spotify-green text-sm font-medium">
-                      {activity.points}
-                    </div>
-                  </div>
-                  <div className="text-xs text-spotify-muted mt-1">
-                    {activity.time}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </section>
+              className="absolute -bottom-12 -right-12 w-40 h-40 bg-purple-500/20 rounded-full blur-xl"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+              transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+            />
+          </motion.div>
         </AnimatedTransition>
       </main>
       
