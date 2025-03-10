@@ -4,9 +4,9 @@
 
 This project aims to increase user retention for Spotify by implementing a gamification solution. The idea is to engage users through rewards, challenges, and interactive features to make their experience more enjoyable and encourage long-term usage. This website is a mockup design for my project idea, created using the Loveable AI bot.
 
-**Project Deck Link** : https://assets.nextleap.app/submissions/NLSpotify-fc3d6a34-3c70-4611-b42b-b60cef6d2e45.pdf
+**Project Deck Link** : [NL Spotify](https://assets.nextleap.app/submissions/NLSpotify-fc3d6a34-3c70-4611-b42b-b60cef6d2e45.pdf)
 
-**URL**: https://lovable.dev/projects/79a5923b-90eb-4827-8d21-5482a61a8c6e
+**URL**: [Open in mobile view for better experience](https://preview--engage-beat-friends.lovable.app/)
 
 ## Data Flow Diagram 
 ```mermaid
