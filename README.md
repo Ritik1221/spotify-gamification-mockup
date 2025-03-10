@@ -1,26 +1,46 @@
-# Welcome to your Lovable project
+# Spotify Retention Gamification Mockup
 
-## Project info
+## Project Overview
+
+This project aims to increase user retention for Spotify by implementing a gamification solution. The idea is to engage users through rewards, challenges, and interactive features to make their experience more enjoyable and encourage long-term usage. This website is a mockup design for my project idea, created using the Loveable AI bot.
+
+**Project Deck Link** : https://assets.nextleap.app/submissions/NLSpotify-fc3d6a34-3c70-4611-b42b-b60cef6d2e45.pdf
 
 **URL**: https://lovable.dev/projects/79a5923b-90eb-4827-8d21-5482a61a8c6e
 
-## How can I edit this code?
+## Data Flow Diagram 
+```mermaid
+flowchart LR
+    User[User] <--> SpotifyApp[Spotify App]
+    SpotifyApp <--> GamificationModule[Gamification Module]
+    GamificationModule <--> UserDataStore[(User Data Store)]
+    GamificationModule <--> RewardsSystem[Rewards System]
+    UserDataStore <--> AnalyticsDashboard[Analytics Dashboard]
+    RewardsSystem <--> AnalyticsDashboard
+    
+    classDef user fill:#f9d71c,stroke:#333,stroke-width:2px;
+    classDef app fill:#1DB954,stroke:#333,stroke-width:2px,color:white;
+    classDef module fill:#1976D2,stroke:#333,stroke-width:2px,color:white;
+    classDef storage fill:#FFA000,stroke:#333,stroke-width:2px;
+    classDef system fill:#7B1FA2,stroke:#333,stroke-width:2px,color:white;
+    classDef analytics fill:#D32F2F,stroke:#333,stroke-width:2px,color:white;
+    
+    class User user;
+    class SpotifyApp app;
+    class GamificationModule module;
+    class UserDataStore storage;
+    class RewardsSystem system;
+    class AnalyticsDashboard analytics
+```
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+**Prerequisites**
+- Node.js (v16 or higher)
+- npm (v8 or higher) or yarn
+- A modern web browser (e.g., Chrome, Firefox)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/79a5923b-90eb-4827-8d21-5482a61a8c6e) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+**Installation**
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
@@ -36,34 +56,27 @@ npm i
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+**Running the Project Locally**
+```sh
+**# Start the development server
+npm start (or yarn start)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+# Open your browser and visit:
+http://localhost:3000
 
-**Use GitHub Codespaces**
+# You should see the mockup website running.**
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Tech Stack
 
 This project is built with .
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Frontend: HTML, CSS, JavaScript (generated via Loveable AI bot)
+- Framework: React.js with TypeScript
+- UI Components: shadcn-ui
+- Styling: Tailwind CSS
+- Build Tool: Vite
 
-## How can I deploy this project?
+## Additional Notes
+This is a mockup, so functionality is limited to the design prototype. Full implementation would require backend integration and Spotify API connections. To enhance this project, consider adding real API calls to Spotify's developer platform.
 
-Simply open [Lovable](https://lovable.dev/projects/79a5923b-90eb-4827-8d21-5482a61a8c6e) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
