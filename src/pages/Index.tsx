@@ -77,7 +77,7 @@ const Index = () => {
     {
       id: 'p2',
       title: 'RapCaviar',
-      description: 'Hip-hop's heavyweight playlist',
+      description: 'Hip-hop\'s heavyweight playlist',
       coverUrl: 'https://i.scdn.co/image/ab67706f00000002b101421957a2d0fc6bf3e88f'
     },
     {
