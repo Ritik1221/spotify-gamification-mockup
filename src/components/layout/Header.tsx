@@ -3,7 +3,6 @@ import React from 'react';
 import { ChevronLeft, Bell, Search, User, Settings } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import SpotifyLogo from '../common/SpotifyLogo';
 
 interface HeaderProps {
   title?: string;
@@ -25,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   showNotification = false,
   showProfile = false,
   showSettings = false,
-  showLogo = false,
+  showLogo = false, // This prop is kept for compatibility but won't be used anymore
   transparent = false
 }) => {
   const navigate = useNavigate();
@@ -46,10 +45,6 @@ const Header: React.FC<HeaderProps> = ({
             >
               <ChevronLeft size={20} />
             </motion.button>
-          )}
-          
-          {showLogo && (
-            <SpotifyLogo size="md" variant="white" className="mr-2" />
           )}
           
           {title && (

@@ -7,7 +7,6 @@ import DailyChallenge from '@/components/features/DailyChallenge';
 import { Star, Clock, Heart, Sparkles, Radio, Headphones, Music, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Avatar from '@/components/common/Avatar';
-import SpotifyLogo from '@/components/common/SpotifyLogo';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -167,7 +166,6 @@ const Index = () => {
         showSearch={true}
         showNotification={true}
         showProfile={true}
-        showLogo={true}
       />
       
       <main className="px-4 pt-2 pb-24">
@@ -183,9 +181,6 @@ const Index = () => {
               <div className="z-10">
                 <h2 className="font-bold text-lg">Welcome Back</h2>
                 <p className="text-sm text-spotify-muted">Your music is waiting for you</p>
-              </div>
-              <div className="absolute -right-5 -bottom-5 opacity-50">
-                <SpotifyLogo size="lg" variant="white" />
               </div>
             </motion.div>
           </section>
