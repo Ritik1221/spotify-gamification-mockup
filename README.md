@@ -80,3 +80,7 @@ This project is built with .
 ## Additional Notes
 This is a mockup, so functionality is limited to the design prototype. Full implementation would require backend integration and Spotify API connections. To enhance this project, consider adding real API calls to Spotify's developer platform.
 
+
+## Developers
+- [Ritik Mittal](https://github.com/Ritik1221)
+- [Loveable](https://lovable.dev/)
