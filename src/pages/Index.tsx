@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import BottomNav from '@/components/layout/BottomNav';
@@ -8,6 +7,7 @@ import DailyChallenge from '@/components/features/DailyChallenge';
 import { Star, Clock, Heart, Sparkles, Radio, Headphones, Music, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Avatar from '@/components/common/Avatar';
+import SpotifyLogo from '@/components/common/SpotifyLogo';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -161,16 +161,35 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-spotify-black to-spotify-dark pb-20">
+    <div className="min-h-screen bg-gradient-to-b from-spotify-black via-spotify-dark to-spotify-black pb-20">
       <Header 
         title={`${currentTime}, Priya!`} 
         showSearch={true}
         showNotification={true}
         showProfile={true}
+        showLogo={true}
       />
       
       <main className="px-4 pt-2 pb-24">
         <AnimatedTransition animation="fade" delay={0.1}>
+          {/* Welcome Banner */}
+          <section className="mb-6">
+            <motion.div 
+              className="bg-gradient-to-r from-spotify-green/30 to-spotify-green/10 rounded-xl p-4 flex items-center overflow-hidden relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="z-10">
+                <h2 className="font-bold text-lg">Welcome Back</h2>
+                <p className="text-sm text-spotify-muted">Your music is waiting for you</p>
+              </div>
+              <div className="absolute -right-5 -bottom-5 opacity-50">
+                <SpotifyLogo size="lg" variant="white" />
+              </div>
+            </motion.div>
+          </section>
+          
           {/* Quick Links */}
           <section className="mb-6">
             <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none">
@@ -264,14 +283,20 @@ const Index = () => {
             
             <div className="grid grid-cols-2 gap-4">
               {recentlyPlayed.map((item) => (
-                <MusicCard
+                <motion.div
                   key={item.id}
-                  title={item.title}
-                  artist={item.artist}
-                  coverUrl={item.coverUrl}
-                  size="sm"
-                  orientation="vertical"
-                />
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="bg-spotify-light/30 rounded-lg p-2 hover:bg-spotify-light/50 transition-all duration-300"
+                >
+                  <MusicCard
+                    title={item.title}
+                    artist={item.artist}
+                    coverUrl={item.coverUrl}
+                    size="sm"
+                    orientation="vertical"
+                  />
+                </motion.div>
               ))}
             </div>
           </section>
@@ -330,8 +355,8 @@ const Index = () => {
               {topPlaylists.map((playlist) => (
                 <motion.div 
                   key={playlist.id}
-                  className="flex items-center p-2.5 bg-spotify-light/70 rounded-lg"
-                  whileHover={{ backgroundColor: 'rgba(40, 40, 40, 0.9)' }}
+                  className="flex items-center p-2.5 bg-spotify-light/40 rounded-lg border border-white/5"
+                  whileHover={{ backgroundColor: 'rgba(40, 40, 40, 0.9)', y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="w-12 h-12 rounded-md overflow-hidden shadow-md">
@@ -340,6 +365,9 @@ const Index = () => {
                   <div className="ml-3 flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{playlist.title}</p>
                     <p className="text-xs text-spotify-muted truncate">{playlist.description}</p>
+                  </div>
+                  <div className="ml-2 bg-spotify-green w-8 h-8 rounded-full flex items-center justify-center">
+                    <Play size={16} className="text-black" />
                   </div>
                 </motion.div>
               ))}

@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { ChevronLeft, Bell, Search, User } from 'lucide-react';
+import { ChevronLeft, Bell, Search, User, Settings } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SpotifyLogo from '../common/SpotifyLogo';
 
 interface HeaderProps {
   title?: string;
@@ -11,6 +12,8 @@ interface HeaderProps {
   showSearch?: boolean;
   showNotification?: boolean;
   showProfile?: boolean;
+  showSettings?: boolean;
+  showLogo?: boolean;
   transparent?: boolean;
 }
 
@@ -21,6 +24,8 @@ const Header: React.FC<HeaderProps> = ({
   showSearch = false,
   showNotification = false,
   showProfile = false,
+  showSettings = false,
+  showLogo = false,
   transparent = false
 }) => {
   const navigate = useNavigate();
@@ -41,6 +46,10 @@ const Header: React.FC<HeaderProps> = ({
             >
               <ChevronLeft size={20} />
             </motion.button>
+          )}
+          
+          {showLogo && (
+            <SpotifyLogo size="md" variant="white" className="mr-2" />
           )}
           
           {title && (
@@ -70,6 +79,15 @@ const Header: React.FC<HeaderProps> = ({
             >
               <Bell size={18} />
               <span className="absolute top-0 right-0 h-2 w-2 bg-spotify-green rounded-full"></span>
+            </motion.button>
+          )}
+          
+          {showSettings && (
+            <motion.button 
+              className="h-8 w-8 flex items-center justify-center rounded-full bg-spotify-light/80"
+              whileTap={{ scale: 0.9 }}
+            >
+              <Settings size={18} />
             </motion.button>
           )}
           
