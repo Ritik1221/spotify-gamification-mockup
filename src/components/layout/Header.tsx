@@ -1,85 +1,91 @@
 
-import React, { useState, useEffect } from 'react';
-import { Search, Bell } from 'lucide-react';
-import Avatar from '../common/Avatar';
+import React from 'react';
+import { ChevronLeft, Bell, Search, User } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   subtitle?: string;
+  showBack?: boolean;
   showSearch?: boolean;
   showNotification?: boolean;
   showProfile?: boolean;
+  transparent?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
   title,
   subtitle,
-  showSearch = true,
-  showNotification = true,
-  showProfile = true
+  showBack = false,
+  showSearch = false,
+  showNotification = false,
+  showProfile = false,
+  transparent = false
 }) => {
-  const [scrolled, setScrolled] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(3);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrolled]);
+  const navigate = useNavigate();
+  
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
-    <motion.header 
-      className={`sticky top-0 z-10 w-full px-4 py-3 flex items-center transition-all duration-300 ${
-        scrolled ? 'nav-blur shadow-md' : 'bg-transparent'
-      }`}
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="flex-1">
-        <h1 className="text-lg font-bold truncate">{title}</h1>
-        {subtitle && (
-          <p className="text-xs text-spotify-muted">{subtitle}</p>
-        )}
-      </div>
-      
-      <div className="flex items-center gap-4">
-        {showSearch && (
-          <button className="p-2 text-spotify-muted hover:text-spotify-text transition-colors">
-            <Search size={20} />
-          </button>
-        )}
+    <header className={`sticky top-0 z-10 px-4 py-3 ${transparent ? 'bg-transparent' : 'bg-spotify-black/80 backdrop-blur-md'}`}>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          {showBack && (
+            <motion.button 
+              className="mr-3 h-8 w-8 flex items-center justify-center rounded-full bg-spotify-light/80"
+              onClick={handleBack}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronLeft size={20} />
+            </motion.button>
+          )}
+          
+          {title && (
+            <div>
+              <h1 className="font-bold text-xl leading-tight">{title}</h1>
+              {subtitle && <p className="text-xs text-spotify-muted">{subtitle}</p>}
+            </div>
+          )}
+        </div>
         
-        {showNotification && (
-          <div className="relative">
-            <button className="p-2 text-spotify-muted hover:text-spotify-text transition-colors">
-              <Bell size={20} />
-            </button>
-            {notificationCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 bg-spotify-green text-xs font-medium text-black rounded-full">
-                {notificationCount}
-              </span>
-            )}
-          </div>
-        )}
-        
-        {showProfile && (
-          <Avatar 
-            src="https://i.pravatar.cc/150?img=32" 
-            alt="Profile" 
-            size="sm"
-            status="online"
-          />
-        )}
+        <div className="flex items-center space-x-3">
+          {showSearch && (
+            <Link to="/search">
+              <motion.button 
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-spotify-light/80"
+                whileTap={{ scale: 0.9 }}
+              >
+                <Search size={18} />
+              </motion.button>
+            </Link>
+          )}
+          
+          {showNotification && (
+            <motion.button 
+              className="h-8 w-8 flex items-center justify-center rounded-full bg-spotify-light/80 relative"
+              whileTap={{ scale: 0.9 }}
+            >
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 h-2 w-2 bg-spotify-green rounded-full"></span>
+            </motion.button>
+          )}
+          
+          {showProfile && (
+            <Link to="/profile">
+              <motion.button 
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-spotify-light/80 overflow-hidden"
+                whileTap={{ scale: 0.9 }}
+              >
+                <User size={18} />
+              </motion.button>
+            </Link>
+          )}
+        </div>
       </div>
-    </motion.header>
+    </header>
   );
 };
 
